@@ -1,0 +1,1650 @@
+syntax = "proto3";
+
+//import "github.com/dmarket/grpc-gateway/protoc-gen-swagger/options/annotations.proto";
+
+package marketplace;
+
+service MarketAPI {
+  //
+  // Get the list of items, that are currently available for purchase on
+  // marketplace storefront.
+  //
+  rpc GetShowcase(GetShowcaseRequest) returns (GetShowcaseResponse);
+
+  //
+  // Get the current list of user's items that are currently not on sale.
+  //
+  rpc GetUserInventory(GetUserInventoryRequest)
+      returns (GetUserInventoryResponse);
+
+  //
+  // Get user inventory summary.
+  //
+  rpc GetUserSummary(GetUserSummaryRequest) returns (GetUserSummaryResponse);
+
+  //
+  // Get available filters for specified game.
+  //
+  rpc GetSupportedFilters(GetSupportedFiltersRequest)
+      returns (GetSupportedFiltersResponse);
+
+  //
+  // Get the current list of user's items that are currently on sale.
+  //
+  rpc GetUserOffers(GetUserOffersRequest) returns (GetUserOffersResponse);
+
+  //
+  // Put up items for sale (create an offer).
+  //
+  rpc CreateOffers(CreateOffersRequest) returns (CreateOffersResponse);
+
+  //
+  // Edit offers.
+  //
+  rpc EditOffers(EditOffersRequest) returns (EditOffersResponse);
+
+  //
+  // Delete offers (remove item from sale).
+  //
+  rpc DeleteOffers(DeleteOffersRequest) returns (DeleteOffersResponse);
+
+  //
+  // Get the current list of user's targets.
+  //
+  rpc GetUserTargets(GetUserTargetsRequest) returns (GetUserTargetsResponse);
+
+  //
+  // Create targets.
+  //
+  rpc CreateTargets(CreateTargetsRequest) returns (CreateTargetsResponse);
+
+  //
+  // Edit targets.
+  //
+  rpc EditTargets(EditTargetsRequest) returns (EditTargetsResponse);
+
+  //
+  // Get user closed targets.
+  //
+  rpc GetUserClosedTargets(GetUserClosedTargetsRequest)
+      returns (GetUserClosedTargetsResponse);
+
+  //
+  // Delete targets.
+  //
+  rpc DeleteTargets(DeleteTargetsRequest) returns (DeleteTargetsResponse);
+
+  //
+  // Transfer user's item from game inventory to DMarket inventory.
+  //
+  rpc DepositAssets(DepositAssetsRequest) returns (DepositAssetsResponse);
+
+  //
+  // Get the status of item deposit transaction.
+  //
+  rpc GetDepositStatus(GetDepositStatusRequest)
+      returns (GetDepositStatusResponse);
+
+  //
+  // Transfer user's item from DMarket inventory to game inventory.
+  //
+  rpc WithdrawAssets(WithdrawAssetsRequest) returns (WithdrawAssetsResponse);
+
+  //
+  // Get the status of item withdrawal transaction.
+  //
+  rpc GetWithdrawStatus(GetWithdrawStatusRequest)
+      returns (GetWithdrawStatusResponse);
+
+  //
+  // Buy items on marketplace storefront.
+  //
+  rpc BuyOffers(BuyOffersRequest) returns (BuyOffersResponse);
+
+  //
+  // Sell items on marketplace instantly.
+  //
+  rpc InstantSellAssets(InstantSellAssetsRequest)
+      returns (InstantSellAssetsResponse);
+
+  //
+  // Exchange items on marketplace.
+  //
+  rpc ExchangeAssets(ExchangeAssetsRequest) returns (ExchangeAssetsResponse);
+
+  //
+  // Get list of available games.
+  //
+  rpc GetGames(GetGamesRequest) returns (GetGamesResponse);
+
+  //
+  // Get current user's account data.
+  //
+  rpc GetAccount(GetAccountRequest) returns (GetAccountResponse);
+
+  //
+  // Get current user's balance.
+  //
+  rpc GetMoneyBalance(GetMoneyBalanceRequest) returns (GetMoneyBalanceResponse);
+
+  //
+  // Send login and password to obtain authorization token.
+  //
+  rpc SignIn(SignInRequest) returns (AuthResponse);
+
+  //
+  // Send login, password. Requires additional email verification.
+  //
+  rpc SignUp(SignUpRequest) returns (SignUpResponse);
+
+  //
+  //  SignInLink third party sign in
+  //
+  rpc SignInLink(SignInLinkRequest) returns (RedirectResponse);
+
+  //
+  // SignInComplete
+  //
+  rpc SignInComplete(SignInCompleteRequest) returns (RedirectResponse);
+
+  //
+  // Send refresh token to get new token pairs.
+  //
+  rpc RefreshTokenPairs(RefreshTokenPairsRequest)
+      returns (RefreshTokenPairsResponse);
+
+  //
+  // Change user password.
+  //
+  rpc ChangeUserPassword(ChangeUserPasswordRequest) returns (AuthResponse);
+
+  //
+  // Returns current user security settings
+  //
+  rpc UserSecuritySettings(UserSecuritySettingsRequest)
+      returns (UserSecuritySettingsResponse);
+
+  //
+  // Enables One Time Passwords mechanism for user.
+  //
+  rpc UserSecurityEnableOTP(UserSecurityEnableOTPRequest)
+      returns (AuthResponse);
+
+  //
+  // Disables One Time Passwords mechanism for user.
+  //
+  rpc UserSecurityDisableOTP(UserSecurityDisableOTPRequest)
+      returns (UserSecurityDisableOTPResponse);
+
+  //
+  // Used to generate new secret key and QR code to be used in authenticator
+  // app.
+  //
+  rpc UserSecurityGenerateOTPSecret(UserSecurityGenerateOTPSecretRequest)
+      returns (UserSecurityGenerateOTPSecretResponse);
+
+  //
+  // Used to verify OTP code during MFA security check.
+  //
+  rpc UserSecurityVerifyOTPCode(UserSecurityVerifyOTPCodeRequest)
+      returns (AuthResponse);
+
+  //
+  // Used to retrieve auth token pair by previously received result hash.
+  //
+  rpc UserExchangeToken(UserExchangeTokenRequest) returns (AuthResponse);
+
+  //
+  // Get addresses of currency wallets linked with user.
+  //
+  rpc GetUserDepositWallets(GetUserDepositWalletsRequest)
+      returns (GetUserDepositWalletsResponse);
+
+  //
+  // Get all available subscriptions.
+  //
+  rpc GetSubscriptions(GetSubscriptionsRequest)
+      returns (GetSubscriptionsResponse);
+
+  //
+  // Get user's active subscriptions.
+  //
+  rpc GetUserSubscriptions(GetUserSubscriptionsRequest)
+      returns (GetUserSubscriptionsResponse);
+
+  //
+  // Buy new subscription for user.
+  //
+  rpc BuyUserSubscription(BuyUserSubscriptionRequest)
+      returns (BuyUserSubscriptionResponse);
+
+  //
+  // Returns user's cashback balance available for withdraw.
+  //
+  rpc GetCashbackBalance(GetCashbackBalanceRequest)
+      returns (GetCashbackBalanceResponse);
+
+  //
+  // Transfers funds from user's cashback balance to wallet.
+  //
+  rpc WithdrawCashback(WithdrawCashbackRequest)
+      returns (WithdrawCashbackResponse);
+
+  //
+  // Get lowest Assets prices.
+  //
+  rpc GetLowestAssetsPrices(GetLowestAssetsPricesRequest)
+      returns (GetLowestAssetsPricesResponse);
+
+  //
+  // Returns sales history for item.
+  //
+  rpc GetSalesHistory(GetSalesHistoryRequest) returns (GetSalesHistoryResponse);
+
+  //
+  // Returns last sales for item.
+  //
+  rpc GetLastSales(GetLastSalesRequest) returns (GetLastSalesResponse);
+
+  //
+  // Checks if email already in use.
+  //
+  rpc CheckEmailExists(CheckEmailExistsRequest) returns (CheckEmailExistsResponse);
+}
+
+message CheckEmailExistsRequest {
+  string Email = 1;
+}
+
+message CheckEmailExistsResponse {
+  bool Exists = 1;
+}
+
+message ChangeUserPasswordRequest {
+  string NewPassword = 1;
+  string OldPassword = 2;
+}
+
+message SignInLinkRequest {
+  string Provider = 1;
+  string Hash = 2;
+  string ReturnURL = 3;
+}
+
+message RedirectResponse { string URL = 1; }
+
+message SignInCompleteRequest {
+  string provider = 1;
+  string linkId = 2;
+  string AccountAttachErrorCode = 3;
+  string authAction = 4;
+}
+
+message Settings {
+  SettingsSecurity Security = 1;
+}
+
+message SettingsMFA { bool Enabled = 1; }
+
+message SettingsSecurity { SettingsMFA MFA = 1; }
+
+message GetCashbackBalanceRequest {}
+
+message GetCashbackBalanceResponse { MoneySubUnit Balance = 1; }
+
+message WithdrawCashbackRequest {}
+
+message WithdrawCashbackResponse {}
+
+message GetShowcaseRequest {
+  // Game identifier on market.
+  string GameID = 1;
+
+  // Common for most games filtering options.
+  BasicShowcaseFilters BasicFilters = 2;
+
+  // Advanced asset filtering options.
+  repeated FilterOption AdvancedFilters = 3;
+
+  // Sort showcase assets by one of predefined sort types.
+  ShowcaseSortType SortType = 20;
+
+  // Offsets items in response.
+  uint64 Offset = 21;
+
+  // Limits number or returned items in response.
+  uint64 Limit = 22;
+}
+
+message GetShowcaseResponse {
+  // Assets list.
+  repeated Asset Items = 1;
+
+  // Total number of items that complain with provided filter.
+  uint64 Total = 2;
+}
+
+message GetUserInventoryRequest {
+  // Game identifier on market.
+  string GameID = 1;
+
+  // Common for most games filtering options.
+  BasicInventoryFilters BasicFilters = 2;
+
+  // Advanced asset filtering options.
+  repeated FilterOption AdvancedFilters = 3;
+
+  // Sort inventory by one of predefined sort types.
+  UserInventorySortType SortType = 5;
+
+  // Inventory asset presentation type.
+  InventoryPresentationType Presentation = 6;
+
+  // Offsets items in response.
+  uint64 Offset = 11;
+
+  // Limits number or returned items in response.
+  uint64 Limit = 12;
+}
+
+message BasicInventoryFilters {
+  // Filter assets in inventory by asset's title.
+  string Title = 1;
+
+  // Show only deposited on market assets.
+  bool InMarket = 2;
+
+  // Filter assets only with Steam trade-lock. Can be applied only for
+  // Steam-based games.
+  bool HasSteamLock = 3;
+
+  // Filter assets only with Steam trade-lock lock not more than specified
+  // number of days. Can be applied only for Steam-based games.
+  uint32 SteamLockDays = 4;
+
+  // Filter inventory by specified asset ID list.
+  repeated string AssetID = 5;
+}
+
+message BasicShowcaseFilters {
+  // Price range filtering.
+  float PriceFrom = 1;
+
+  // Price range filtering.
+  float PriceTo = 2;
+
+  // Currency code to use with price range filter.
+  string Currency = 3;
+
+  // Filter assets in inventory by asset's title.
+  string Title = 4;
+
+  // Filter assets only with Steam trade-lock. Can be applied only for
+  // Steam-based games.
+  bool HasSteamLock = 5;
+
+  // Filter assets only with Steam trade-lock lock not more than specified
+  // number of days. Can be applied only for Steam-based games.
+  int64 SteamLockDays = 6;
+}
+
+message FilterOption {
+  // Filter name.
+  string Name = 1;
+
+  // Filter value.
+  string Value = 2;
+}
+
+message Strings {
+  // String values list.
+  repeated string List = 1;
+}
+
+enum InventoryPresentationType {
+  InventoryPresentationSimple = 0;
+  InventoryPresentationDetailed = 1;
+}
+
+enum UserInventorySortType {
+  // Default sort type for user inventory.
+  UserInventorySortTypeDefault = 0;
+}
+
+enum UserTargetsSortType {
+  // Default sort type for user targets.
+  UserTargetsSortTypeDefault = 0;
+}
+
+enum UserOffersSortType {
+  // Default sort type for user offers.
+  UserOffersSortTypeDefault = 0;
+
+  // Sort user offers by date showing newest first.
+  UserOffersSortTypeDateNewestFirst = 1;
+}
+
+enum ShowcaseSortType {
+  // Sort showcase by relevance.
+  ShowcaseSortTypeRelevance = 0;
+
+  // Sort showcase by date showing newest first.
+  ShowcaseSortTypeDateNewestFirst = 1;
+
+  // Sort showcase by date showing oldest first.
+  ShowcaseSortTypeDateOldestFirst = 2;
+
+  // Sort showcase by price showing highest price first.
+  ShowcaseSortTypePriceHighestFirst = 3;
+
+  // Sort showcase by price showing lowest price first.
+  ShowcaseSortTypePriceLowestFirst = 4;
+}
+
+message Asset {
+  // Unique asset identifier.
+  string AssetID = 1;
+
+  // Unique asset variant identifier.
+  string VariantID = 2;
+
+  // Asset title.
+  string Title = 3;
+
+  // Asset image url. Additional images can be placed in attributes.
+  string ImageURL = 4;
+
+  // Game identifier asset belongs to.
+  string GameID = 6;
+
+  // Game type.
+  GameType GameType = 7;
+
+  // Current asset location.
+  AssetLocation Location = 8;
+
+  // Determines if asset can be transferred from market to game.
+  bool Withdrawable = 10;
+
+  // Determines if asset can be transferred from game to market.
+  bool Depositable = 11;
+
+  // Determines if asset can be traded on market.
+  bool Tradable = 12;
+
+  // Custom asset attributes specific for each game.
+  repeated AssetAttribute Attributes = 13;
+
+  // On sale asset price
+  AssetOffer Offer = 14;
+
+  // Suggested market price for assets of same kind.
+  Money MarketPrice = 15;
+
+  // Price to sell asset instantly. Available only for assets in user inventory.
+  Money InstantPrice = 16;
+
+  // Deprecated. Unique asset class identifier.
+  string ClassID = 17;
+}
+
+message AssetAttribute {
+  // Attribute name.
+  string Name = 1;
+
+  // Asset attribute.
+  string Value = 2;
+}
+
+message AssetOffer {
+  // Unique offer identifier.
+  string OfferID = 1;
+
+  // Asset on sale price.
+  Money Price = 2;
+
+  // Fee that will be payed by seller.
+  Money Fee = 3;
+
+  // Offer creation date.
+  uint64 CreatedDate = 4;
+}
+
+enum AssetLocation {
+  // Asset in user inventory in game.
+  AssetLocationInGame = 0;
+
+  // Asset in user inventory in marketplace.
+  AssetLocationInMarket = 1;
+
+  // Asset currently moving from one state to another.
+  AssetLocationInTransfer = 3;
+}
+
+enum GameType {
+  // Blockchain-based game.
+  GameTypeBlockchain = 0;
+
+  // Steam-based game.
+  GameTypeSteam = 1;
+}
+
+message Money {
+  // Currency code.
+  string Currency = 1;
+
+  // Money amount.
+  float Amount = 2;
+}
+
+message GetUserInventoryResponse {
+  // Assets list.
+  repeated Asset Items = 1;
+
+  // Total number of items that complain with provided filter.
+  uint64 Total = 2;
+}
+
+message GetUserSummaryRequest {
+  // Game identifier on market.
+  string GameID = 1;
+}
+
+message GetUserSummaryResponse {
+  // Assets count in inventory.
+  uint64 Assets = 1;
+
+  // On sale assets count.
+  uint64 Offers = 2;
+
+  // Targets count.
+  uint64 Targets = 3;
+
+  // Completed on sale offers.
+  uint64 CompletedOffers = 4;
+
+  // Successfully completed targets.
+  uint64 ClosedTargets = 5;
+}
+
+message GetSupportedFiltersRequest {
+  // Game identifier on market.
+  string GameID = 1;
+
+  // One scopes where filters can be applied.
+  FilterScope Scope = 2;
+}
+
+message GetSupportedFiltersResponse {
+  // Filter descriptions list.
+  repeated FilterDescription Filters = 1;
+}
+
+message FilterDescription {
+  // Filter name.
+  string Name = 1;
+
+  // One of supported filter value types.
+  FilterValueType ValueType = 2;
+}
+
+enum FilterScope {
+  // Filters used for showcase.
+  FilterScopeShowcase = 0;
+
+  // Filters used for inventory.
+  FilterScopeUserInventory = 1;
+
+  // Filters used for user offers.
+  FilterScopeUserOffers = 2;
+
+  // Filters used for user targets.
+  FilterScopeUserTargets = 3;
+}
+
+enum FilterValueType {
+  // Single string value.
+  FilterValueTypeString = 0;
+
+  // Single integer value.
+  FilterValueTypeInt = 1;
+
+  // Single double or float value.
+  FilterValueTypeDouble = 2;
+
+  // Single boolean value.
+  FilterValueTypeBool = 3;
+
+  // String array value.
+  FilterValueTypeStrings = 4;
+}
+
+enum OfferStatus {
+  OfferStatusDefault = 0;
+  OfferStatusActive = 1;
+  OfferStatusSold = 2;
+  OfferStatusInactive = 3;
+  OfferStatusIn_transfer = 4;
+}
+
+enum TargetStatus {
+  // Target currently inactive.
+  TargetStatusInactive = 0;
+
+  // Target currently active and can be matched with complaint offers.
+  TargetStatusActive = 1;
+}
+
+message DepositAssetsRequest {
+  // List of asset id to deposit.
+  repeated string AssetID = 1;
+}
+
+message DepositAssetsResponse {
+  // Deposit operation unique identifier.
+  string DepositID = 1;
+}
+
+message SteamDepositInfo {
+  // Steam trade offer id.
+  string TradeOfferID = 1;
+
+  // Custom trade message.
+  string Message = 2;
+}
+
+message GetDepositStatusRequest {
+  // Deposit operation unique identifier.
+  string DepositID = 1;
+}
+
+message GetDepositStatusResponse {
+  // Deposit operation unique identifier.
+  string DepositID = 1;
+
+  // Initial assets list requested to deposit.
+  repeated string AssetID = 2;
+
+  // Current deposit operation status.
+  TransferStatus Status = 3;
+
+  // Error details in case of failed deposit operation.
+  string Error = 4;
+
+  // Map of in-game asset id from request and new in-market asset ids after
+  // deposit.
+  repeated AssetMap Assets = 5;
+
+  oneof DepositInfo {
+    // Steam-specific deposit operation details.
+    SteamDepositInfo SteamDepositInfo = 10;
+  }
+}
+
+message AssetMap {
+  // In-game asset identifier.
+  string InGameAssetID = 1;
+
+  // In-market asset identifier.
+  string DmarketAssetID = 2;
+}
+
+enum TransferStatus {
+  TransferStatusPending = 0;
+  TransferStatusCreated = 1;
+  TransferStatusSuccess = 2;
+  TransferStatusFailedToCreate = 3;
+  TransferStatusError = 4;
+  TransferStatusOnHold = 5;
+}
+
+message WithdrawAssetsRequest {
+  // List of asset id to withdraw.
+  repeated string AssetID = 1;
+}
+
+message WithdrawAssetsResponse {
+  // Withdraw operation unique identifier.
+  string WithdrawID = 1;
+}
+
+message GetWithdrawStatusRequest {
+  // Withdraw operation unique identifier.
+  string WithdrawID = 1;
+}
+
+message GetWithdrawStatusResponse {
+  // Withdraw operation unique identifier.
+  string WithdrawID = 1;
+
+  // Initial assets list requested to withdraw.
+  repeated string AssetID = 2;
+
+  // Current withdraw operation status.
+  TransferStatus Status = 3;
+
+  // Error details in case of failed withdraw operation.
+  string Error = 4;
+
+  oneof WithdrawInfo {
+    // Steam-specific withdraw operation details.
+    SteamWithdrawInfo SteamWithdrawInfo = 10;
+  }
+}
+
+message SteamWithdrawInfo {
+  // Steam trade offer id.
+  string TradeOfferID = 1;
+
+  // Custom trade message.
+  string Message = 2;
+}
+
+message GetUserTargetsRequest {
+  // Game identifier on market.
+  string GameID = 1;
+
+  // Common for most games filtering options.
+  BasicUserTargetsFilters BasicFilters = 2;
+
+  // Advanced asset filtering options.
+  repeated FilterOption AdvancedFilters = 3;
+
+  // Sort user targets by one of predefined sort types.
+  UserTargetsSortType SortType = 5;
+
+  // Offsets items in response.
+  uint64 Offset = 21;
+
+  // Limits number or returned items in response.
+  uint64 Limit = 22;
+}
+
+message GetUserClosedTargetsRequest {
+  // Offsets closed targets in response.
+  uint64 Offset = 1;
+
+  // Limits number of returned closed targets in response.
+  uint64 Limit = 2;
+  OrderDir OrderDir = 3;
+}
+
+enum OrderDir {
+  desc = 0;
+  asc = 1;
+}
+
+message GetUserClosedTargetsResponse {
+  message Trade {
+    string OfferID = 1;
+    string TargetID = 2;
+    string AssetID = 3;
+    Money Price = 4;
+    string CurrencyCode = 5;
+    uint64 Amount = 6;
+  }
+  repeated Trade Trades = 1;
+  uint64 Total = 2;
+}
+
+message BasicUserTargetsFilters {
+  // Price range filtering.
+  float PriceFrom = 1;
+
+  // Price range filtering.
+  float PriceTo = 2;
+
+  // Currency code to use with price range filter.
+  string Currency = 3;
+
+  // Filter user targets by asset's title.
+  string Title = 4;
+
+  // Filter by unique target identifier.
+  string TargetID = 5;
+
+  // Target current status.
+  TargetStatus Status = 6;
+}
+
+message GetUserTargetsResponse {
+  // User targets list.
+  repeated Target Items = 1;
+
+  // Total number of items that complain with provided filters.
+  uint64 Total = 2;
+}
+
+message Target {
+  // Target unique identifier.
+  string TargetID = 1;
+
+  // Targeting asset's title.
+  string Title = 2;
+
+  // Amount of same assets in one single target entity.
+  uint64 Amount = 3;
+
+  // Current target status.
+  TargetStatus Status = 4;
+
+  // Game identifier asset belongs to.
+  string GameID = 6;
+
+  // Game type.
+  GameType GameType = 7;
+
+  // Custom asset attributes specific for each game. Target matching is done by
+  // this attributes.
+  repeated AssetAttribute Attributes = 8;
+
+  // Price per asset in target.
+  Money Price = 9;
+}
+
+message EditTarget {
+  string TargetID = 1;
+  int64 Amount = 2;
+  Money Price = 3;
+}
+
+message ErrorDetails {
+  // Unique error code.
+  ErrorCodes Code = 1;
+
+  // Human readable error message.
+  string Message = 2;
+}
+
+message CreateTargetsRequest {
+  // List of targets to create.
+  repeated CreateTargetRequest Targets = 1;
+}
+
+message CreateTargetRequest {
+  // Amount of same assets in one single target entity.
+  uint64 Amount = 1;
+
+  // Price per asset in target.
+  Money Price = 2;
+
+  // Custom asset attributes specific for each game. Target matching is done by
+  // this attributes.
+  repeated AssetAttribute Attributes = 3;
+}
+
+message CreateTargetsResponse {
+  // Results for each sent request.
+  repeated CreateTargetResponse Result = 1;
+}
+
+message CreateTargetResponse {
+  // Initial target creation request.
+  CreateTargetRequest CreateTarget = 1;
+
+  // Target identifier in case of successful create.
+  string TargetID = 2;
+
+  // True if operation was successful.
+  bool Successful = 3;
+
+  // Request error details. Empty if request was successful.
+  ErrorDetails Error = 4;
+}
+
+message EditTargetsRequest {
+  // List of targets to edit.
+  repeated EditTargetRequest Targets = 1;
+}
+
+message EditTargetRequest {
+  // Unique target identifier.
+  string TargetID = 1;
+
+  // Amount of same assets in one single target entity.
+  uint64 Amount = 2;
+
+  // Price per asset in target.
+  Money Price = 3;
+}
+
+message EditTargetsResponse {
+  // Results for each sent request.
+  repeated EditTargetResponse Result = 1;
+}
+
+message EditTargetResponse {
+  // Initial target edit request.
+  EditTargetRequest EditTarget = 1;
+
+  // True if operation was successful.
+  bool Successful = 2;
+
+  // Request error details. Empty if request was successful.
+  ErrorDetails Error = 3;
+}
+
+message DeleteTargetsRequest {
+  // Targets list to delete.
+  repeated DeleteTargetRequest Targets = 1;
+}
+
+message DeleteTargetRequest {
+  // Unique target identifier.
+  string TargetID = 1;
+}
+
+message DeleteTargetsResponse {
+  // Results for each sent request.
+  repeated DeleteTargetResponse Result = 1;
+}
+
+message DeleteTargetResponse {
+  // Initial target delete request.
+  DeleteTargetRequest DeleteTarget = 1;
+
+  // True if operation was successful.
+  bool Successful = 2;
+
+  // Request error details. Empty if request was successful.
+  ErrorDetails Error = 3;
+}
+
+message GetUserOffersRequest {
+  // Game identifier on market.
+  string GameID = 1;
+
+  // On sale offer current status.
+  OfferStatus Status = 2;
+
+  // Advanced asset filtering options.
+  repeated FilterOption AdvancedFilters = 3;
+
+  // Sort user offers by one of predefined sort types.
+  UserOffersSortType SortType = 5;
+
+  BasicUserOffersFilters BasicFilters = 6;
+
+  // Offsets items in response.
+  uint64 Offset = 21;
+
+  // Limits number or returned items in response.
+  uint64 Limit = 22;
+}
+
+message BasicUserOffersFilters {
+  // Price range filtering.
+  float PriceFrom = 1;
+
+  // Price range filtering.
+  float PriceTo = 2;
+
+  // Currency code to use with price range filter.
+  string Currency = 3;
+}
+
+message GetUserOffersResponse {
+  // User on sale assets.
+  repeated Asset Items = 1;
+
+  // Total number of items that complain with provided filter.
+  uint64 Total = 2;
+}
+
+message CreateOffersRequest {
+  // List of offers to create.
+  repeated CreateOfferRequest Offers = 1;
+}
+
+message CreateOfferRequest {
+  // Asset ID in user inventory.
+  string AssetID = 1;
+
+  // On sale price.
+  Money Price = 2;
+}
+
+message CreateOffersResponse {
+  // Results for each sent request.
+  repeated CreateOfferResponse Result = 1;
+}
+
+message CreateOfferResponse {
+  // Initial put on sale request.
+  CreateOfferRequest CreateOffer = 1;
+
+  // Offer identifier in case of successful create.
+  string OfferID = 2;
+
+  // True if operation was successful.
+  bool Successful = 3;
+
+  // Request error details. Empty if request was successful.
+  ErrorDetails Error = 4;
+}
+
+message EditOffersRequest {
+  // List of offers to edit.
+  repeated EditOfferRequest Offers = 1;
+}
+
+message EditOfferRequest {
+  // Offer or asset identifier to identify offer that should be edited.
+  oneof Identifier {
+    // Offer identifier (one of).
+    string OfferID = 1;
+
+    // Asset identifier (one of).
+    string AssetID = 2;
+  }
+
+  // New offer price.
+  Money Price = 3;
+}
+
+message EditOffersResponse {
+  // Results for each sent request.
+  repeated EditOfferResponse Result = 1;
+}
+
+message EditOfferResponse {
+  // Initial edit offer request.
+  EditOfferRequest EditOffer = 1;
+
+  // True if operation was successful.
+  bool Successful = 2;
+
+  // Request error details. Empty if request was successful.
+  ErrorDetails Error = 3;
+
+  // On success creates new offer id
+  string NewOfferID = 4;
+}
+
+message DeleteOffersRequest {
+  // Offers list to delete.
+  repeated DeleteOfferRequest Offers = 1;
+}
+
+// Offer or asset identifier to identify offer that should be deleted.
+message DeleteOfferRequest {
+  // Offer or asset identifier to identify offer that should be deleted.
+  oneof Identifier {
+    // Offer identifier (one of).
+    string OfferID = 1;
+
+    // Asset identifier (one of).
+    string AssetID = 2;
+  }
+}
+
+message DeleteOffersResponse {
+  // Results for each sent request.
+  repeated DeleteOfferResponse Result = 1;
+}
+
+message DeleteOfferResponse {
+  // Offer or asset identifier to identify offer that should be deleted.
+  oneof Identifier {
+    // Offer identifier (one of).
+    string OfferID = 1;
+
+    // Asset identifier (one of).
+    string AssetID = 2;
+  }
+
+  // True if operation was successful.
+  bool Successful = 3;
+
+  // Request error details. Empty if request was successful.
+  ErrorDetails Error = 4;
+}
+
+message BuyOfferRequest {
+  // Offer identifier that should be purchased.
+  string OfferID = 1;
+
+  // Purchase price. Should be the same as on storefront.
+  Money Price = 2;
+}
+
+message BuyOffersRequest {
+  // List of offers to purchase.
+  repeated BuyOfferRequest Offers = 1;
+}
+
+message BuyOffersResponse {
+  // Results for each sent request.
+  repeated BuyOfferResponse Result = 1;
+}
+
+message BuyOfferResponse {
+  // Initial request.
+  BuyOfferRequest BuyOffer = 1;
+
+  // True if request was successful.
+  bool Successful = 2;
+
+  // Request error details. Empty if request was successful.
+  ErrorDetails Error = 3;
+}
+
+message InstantSellAssetsRequest {
+  // Assets to sell instantly.
+  repeated InstantSellAssetRequest Assets = 1;
+}
+
+message InstantSellAssetRequest {
+  // Unique asset identifier on market.
+  string AssetID = 1;
+
+  // Price to sell asset instantly.
+  Money InstantPrice = 16;
+}
+
+message InstantSellAssetsResponse {
+  // Results for each sent request.
+  repeated InstantSellAssetResponse Result = 1;
+}
+
+message InstantSellAssetResponse {
+  // Initial sell request.
+  InstantSellAssetRequest Asset = 1;
+
+  // True if request was successful.
+  bool Successful = 2;
+
+  // Request error details. Empty if request was successful.
+  ErrorDetails Error = 3;
+}
+
+message ExchangeAssetsRequest {
+  // List of offers from storefront.
+  repeated BuyOfferRequest Offers = 1;
+
+  // Assets from user inventory to exchange.
+  repeated InstantSellAssetRequest Assets = 2;
+}
+
+message ExchangeAssetsResponse {
+  // Initial exchange request.
+  ExchangeAssetsRequest Exchange = 1;
+
+  // True if request was successful.
+  bool Successful = 2;
+
+  // Request error details. Empty if request was successful.
+  ErrorDetails Error = 3;
+}
+
+message GetGamesRequest {}
+
+message GetGamesResponse {
+  // Games list.
+  repeated GetGameResponse Games = 1;
+}
+
+message GetGameResponse {
+  // Game identifier on market.
+  string GameID = 1;
+
+  // Game name on market.
+  string Name = 2;
+
+  // Game logo on market.
+  string LogoImageURL = 3;
+
+  // Game type.
+  GameType GameType = 4;
+}
+
+message GetAccountRequest {}
+
+message GetAccountResponse {
+  // Unique user account identifier.
+  string AccountID = 1;
+
+  // User email.
+  string Email = 2;
+
+  // Username.
+  string Username = 3;
+
+  // User avatar image URL.
+  string AvatarImageURL = 4;
+}
+
+message MoneyBalance {
+  // Currency code.
+  string Currency = 1;
+
+  // Money amount.
+  float Amount = 2;
+
+  // Money amount available to withdraw.
+  float AvailableToWithdraw = 3;
+}
+
+message GetMoneyBalanceRequest {}
+
+message GetMoneyBalanceResponse {
+  // Available user balances.
+  repeated MoneyBalance Balance = 1;
+}
+
+message SignInRequest {
+  // User email.
+  string Email = 1;
+
+  // User password.
+  string Password = 2;
+
+  // ReCaptcha code (not enabled by default).
+  string ReCaptchaCode = 3;
+}
+
+message AuthResponse {
+  // Result type. Authorised in case when tokens are ready, OTP verification
+  // required, etc.
+  AuthResult Result = 1;
+
+  // Should be used to finalize authentication process in case of OTP
+  // verification, Oauth sign-in, etc.
+  string ResultHash = 2;
+
+  // User auth token.
+  string AuthToken = 3;
+
+  // Auth token expiration date timestamp.
+  int64 AuthTokenExpiresAt = 4;
+
+  // Refresh token for auth token renewal.
+  string RefreshToken = 5;
+
+  // Refresh token expiration date timestamp.
+  int64 RefreshTokenExpiresAt = 6;
+}
+
+enum AuthResult {
+  Authorized = 0;
+  OTPVerifyRequired = 1;
+  TokenExchangeRequired = 2;
+}
+
+message SignUpRequest {
+  // User email.
+  string Email = 1;
+
+  // User password.
+  string Password = 2;
+
+  // Username.
+  string Username = 3;
+
+  // Legal agreements confirmation.
+  bool AgreementsConfirmed = 4;
+
+  // Enable newsletters.
+  bool EnabledNewsletters = 5;
+}
+
+message RefreshTokenPairsRequest {
+  // Refresh token for auth token renewal.
+  string RefreshToken = 1;
+}
+
+message RefreshTokenPairsResponse {
+  // User auth token.
+  string AuthToken = 2;
+
+  // Auth token expiration date timestamp.
+  int64 AuthTokenExpiresAt = 3;
+
+  // Refresh token for auth token renewal.
+  string RefreshToken = 4;
+
+  // Refresh token expiration date timestamp.
+  int64 RefreshTokenExpiresAt = 5;
+}
+
+message SignUpResponse {}
+
+message UserSecuritySettingsRequest {}
+
+message UserSecuritySettingsResponse {
+  // Multi-factor authentication settings.
+  UserSecuritySettingsMFA MFA = 1;
+}
+
+message UserSecuritySettingsMFA {
+  // One Time Password settings.
+  UserSecuritySettingsOTP OTP = 1;
+}
+
+message UserSecuritySettingsOTP {
+  // One Time Password current state.
+  bool Enabled = 1;
+}
+
+message UserSecurityEnableOTPRequest {
+  // OTP secret key.
+  string Secret = 1;
+
+  // OTP code.
+  string Code = 2;
+}
+
+message UserSecurityDisableOTPRequest {
+  // OTP code.
+  string Code = 1;
+}
+
+message UserSecurityDisableOTPResponse {}
+
+message UserSecurityGenerateOTPSecretRequest {}
+
+message UserSecurityGenerateOTPSecretResponse {
+  // OTP secret key.
+  string Secret = 1;
+
+  // QR code image URL.
+  string QRImageURL = 2;
+}
+
+message UserSecurityVerifyOTPCodeRequest {
+  // OTP code.
+  string Code = 1;
+
+  // Hash string received after sign in request.
+  string ResultHash = 2;
+}
+
+message UserExchangeTokenRequest {
+  // Hash string received after sign in request or external sign in redirect.
+  string ResultHash = 1;
+}
+
+message GetUserDepositWalletsRequest {}
+
+message GetUserDepositWalletsResponse {
+  // Wallets for deposit
+  repeated DepositWallet DepositWallets = 1;
+}
+
+message DepositWallet {
+  // Wallet currency name.
+  WalletCurrency Name = 1;
+
+  // Wallet address.
+  string Address = 2;
+}
+
+enum WalletCurrency {
+  DMT = 0;
+  ETH = 1;
+}
+
+message BuyUserSubscriptionRequest {
+  // Subscription ID
+  string SubscriptionID = 1;
+}
+
+message BuyUserSubscriptionResponse {}
+
+message GetSubscriptionsRequest {}
+
+message GetSubscriptionsResponse {
+  repeated Subscription Subscriptions = 1;
+}
+
+message Subscription {
+  // Subscription ID
+  string ID = 1;
+
+  // Subscription name
+  string Name = 2;
+
+  // Subscription Price
+  MoneySubUnit Price = 3;
+
+  // Subscription price with discount
+  MoneySubUnit PriceWithDiscount = 4;
+
+  // Flag that represents if discount is enabled
+  bool HasDiscount = 5;
+
+  // Turnover amount for BUY/TARGET/EXCHANGE operations
+  MoneySubUnit TurnoverAmount = 6;
+
+  // Cashback percent
+  float CashbackPercent = 7;
+
+  // Subscription period in days
+  uint64 SubscriptionPeriod = 8;
+
+  // Flag that determines if subscription is blocked for purchase
+  bool IsBlocked = 9;
+
+  // Date when subscription is unblock for purchase
+  uint64 DateUnblock = 10;
+}
+
+message GetUserSubscriptionsRequest {}
+
+message GetUserSubscriptionsResponse {
+  repeated UserSubscription UserSubscriptions = 1;
+}
+
+message UserSubscription {
+  // User subscription ID
+  string ID = 1;
+
+  // Subscription state true/false
+  bool Active = 2;
+
+  // Subscription start date
+  uint64 DateStart = 3;
+
+  // Subscription end date
+  uint64 DateEnd = 4;
+
+  // Turnover treshold real amount
+  MoneySubUnit TurnoverThreshold = 5;
+
+  // Turnover treshold max amount
+  MoneySubUnit TurnoverThresholdLimit = 6;
+
+  // Subscription ID
+  string SubscriptionID = 7;
+}
+
+message GetLowestAssetsPricesRequest {
+  // Asset's title
+  string Title = 1;
+
+  // Asset's game id
+  string GameID = 2;
+
+  // Limits number of returned Assets
+  uint64 Limit = 3;
+
+  // Offsets items in response
+  uint64 Offset = 4;
+
+  // Asset's currency
+  string Currency = 5;
+
+  // Order key
+  string OrderBy = 6;
+
+  // Order direction
+  OrderDirR OrderDir = 7;
+}
+
+enum OrderDirR {
+  ASC = 0;
+  DESC = 1;
+}
+
+message GetLowestAssetsPricesResponse {
+  // List of assets with lowest price
+  repeated LowestPriceAsset Items = 1;
+
+  // Total number of Assets
+  uint64 Total = 2;
+}
+
+message LowestPriceAsset {
+  // Asset's title
+  string Title = 1;
+
+  // Asset's game ID
+  string GameID = 2;
+
+  // Asset's price
+  Money Price = 3;
+}
+
+message GetSalesHistoryRequest {
+  // Item title
+  string Title = 1;
+
+  // Asset's game ID
+  string GameID = 2;
+
+  // Period to aggregate
+  string Period = 3;
+
+  // Currency
+  Currency Currency = 4;
+}
+
+message GetSalesHistoryResponse {
+  // Currency code
+  Currency Currency = 1;
+
+  // Item's sales history
+  SalesHistoryItem SalesHistory = 2;
+}
+
+message SalesHistoryItem {
+  // Items prices
+  repeated string Prices = 1;
+
+  // Items amount
+  repeated int32 Items = 2;
+
+  // Labels on X-scale
+  repeated string Labels = 3;
+}
+
+message GetLastSalesRequest {
+  // Item title
+  string Title = 1;
+
+  // Asset's game ID
+  string GameID = 2;
+
+  // Currency
+  Currency Currency = 3;
+}
+
+message GetLastSalesResponse {
+  repeated LastSale LastSales = 1;
+}
+
+message LastSale {
+  // Sale date
+  uint64 Date = 1;
+
+  // Sale price
+  MoneySubUnit Price = 2;
+}
+
+message MoneySubUnit {
+  // Currency code.
+  Currency Currency = 1;
+
+  // Money amount.
+  int64 Amount = 2;
+}
+
+enum Currency {
+  USD = 0;
+  DMC = 1;
+}
+
+enum ErrorCodes {
+  // errors: Internal Error: {{ err|string }}
+  // code: 500
+  Internal = 0;
+
+  // errors: Unauthorized
+  // code: 401
+  Unauthorized = 1;
+
+  // errors: Not enough balance
+  // code: 400
+  NotEnoughBalance = 2;
+
+  // errors: Active subscription already exists
+  // code: 400
+  ActiveSubscriptionExists = 3;
+
+  // errors: Insufficient funds
+  // code: 400
+  InsufficientFunds = 4;
+
+  // errors: Subscription purchase is blocked
+  // code: 400
+  SubscriptionPurchaseIsBlocked = 5;
+
+  // errors: Recaptcha required
+  // code: 400
+  RecaptchaRequired = 6;
+
+  // errors:Wrong recaptcha
+  // code: 400
+  WrongRecaptcha = 7;
+
+  // errors:Bad credentials
+  // code: 400
+  BadCredentials = 8;
+
+  // errors:Email [{{email|string}}] is not verified
+  // code: 400
+  EmailIsNotVerified = 9;
+
+  // errors:Invalid OTP code
+  // code: 400
+  InvalidOTPCode = 10;
+
+  // errors:OTP authentication is disabled
+  // code: 400
+  OTPDisabled = 11;
+
+  // errors:OTP session expired
+  // code: 400
+  OTPSessionExpired = 12;
+
+  // errors: Title parameter is required
+  // code: 400
+  TitleRequired = 14;
+
+  // errors: Period parameter is invalid
+  // code: 400
+  InvalidPeriod = 15;
+
+  // errors:Bad request
+  // code: 400
+  BadRequest = 16;
+
+  // errors: GameID parameter is required
+  // code: 400
+  GameIDRequired = 17;
+
+  //  errors:MFA already enabled
+  //  code: 400
+  MFAAlreadyEnabled = 18;
+
+}
