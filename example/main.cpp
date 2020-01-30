@@ -35,6 +35,8 @@ public:
         if (status.ok()) {
             return reply.authtoken();
         } else {
+            std::cout << "Err: " << status.error_message() << std::endl;
+            std::cout << "Err details: " << status.error_details() << std::endl;
             return "RPC error";
         }
     }
@@ -45,9 +47,9 @@ private:
 
 
 int main() {
-    ApiClient api(grpc::CreateChannel("localhost:50051", grpc::InsecureChannelCredentials()));
+    ApiClient api(grpc::CreateChannel("v1.marketplace.grpc-demo.dmarket.com:443", grpc::InsecureChannelCredentials()));
 
-    std::string email("load-testing_2611-0@gmail.com");
+    std::string email("alexx.2409+95@gmail.com");
     std::string password("QWERTYasdf1234zxcv");
 
     std::string auth_token = api.Login(email, password);
