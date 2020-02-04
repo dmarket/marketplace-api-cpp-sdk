@@ -1,7 +1,5 @@
 syntax = "proto3";
 
-//import "github.com/dmarket/grpc-gateway/protoc-gen-swagger/options/annotations.proto";
-
 package marketplace;
 
 service MarketAPI {
@@ -148,10 +146,15 @@ service MarketAPI {
   rpc SignInComplete(SignInCompleteRequest) returns (RedirectResponse);
 
   //
+  // Allows to exchange token obtained from 3rd-party oauth system to DMarket auth token.
+  // If there is no account on Marketplace assigned to received external credentials it can be created.
+  //
+  rpc ExchangeAuthToken(ExchangeAuthTokenRequest) returns (AuthResponse);
+
+  //
   // Send refresh token to get new token pairs.
   //
-  rpc RefreshTokenPairs(RefreshTokenPairsRequest)
-      returns (RefreshTokenPairsResponse);
+  rpc RefreshTokenPairs(RefreshTokenPairsRequest) returns (RefreshTokenPairsResponse);
 
   //
   // Change user password.
@@ -250,6 +253,22 @@ service MarketAPI {
   // Checks if email already in use.
   //
   rpc CheckEmailExists(CheckEmailExistsRequest) returns (CheckEmailExistsResponse);
+
+  //
+  // Send game integration email
+  //
+  rpc SendGameIntegrationEmail(SendGameIntegrationEmailRequest) returns (SendGameIntegrationEmailResponse);
+}
+
+message ExchangeAuthTokenRequest {
+  // Auth provider name configured on Auth service.
+  string AuthProvider = 1;
+
+  // Auth token from 3rd-party oauth provider.
+  string Token = 2;
+
+  // Allows to create account and assign external credentials to it.
+  bool CreateAccount = 3;
 }
 
 message CheckEmailExistsRequest {
@@ -276,8 +295,10 @@ message RedirectResponse { string URL = 1; }
 message SignInCompleteRequest {
   string provider = 1;
   string linkId = 2;
-  string AccountAttachErrorCode = 3;
+  // deprecated
+  string steamAttachErrorCode = 3;
   string authAction = 4;
+  string accountAttachErrorCode = 5;
 }
 
 message Settings {
@@ -1561,6 +1582,45 @@ message LastSale {
   MoneySubUnit Price = 2;
 }
 
+message SendGameIntegrationEmailRequest {
+  // Game developer email
+  string Email = 1;
+
+  // Game developer company
+  string Company = 2;
+
+  // Game developer questions
+  repeated string Questions = 3;
+
+  // Game developer first name
+  string FirstName = 4;
+
+  // Game developer last name
+  string LastName = 5;
+
+  // Game developer role
+  string Role = 6;
+
+  // Game developer job title
+  string JobTitle = 7;
+
+  // Game developer company website
+  string CompanyWebsite = 8;
+
+  // Game developer number of employees
+  string NumberOfEmployees = 9;
+
+  // Game name
+  string GameName = 10;
+
+  // How did game developer hear about us
+  string Source = 11;
+}
+
+message SendGameIntegrationEmailResponse {
+
+}
+
 message MoneySubUnit {
   // Currency code.
   Currency Currency = 1;
@@ -1647,4 +1707,27 @@ enum ErrorCodes {
   //  code: 400
   MFAAlreadyEnabled = 18;
 
+  //  errors:Deposit transfer not found
+  //  code: 400
+  DepositTransferNotFound = 19;
+
+  //  errors:Withdraw transfer not found
+  //  code: 400
+  WithdrawTransferNotFound = 20;
+
+  //  errors:Inventory Items Not Found
+  //  code: 400
+  InventoryItemsNotFound = 21;
+
+  // errors:Unsupported auth provider
+  // code: 400
+  UnsupportedAuthProvider = 22;
+
+  // errors:Field [{{fieldName|string}}] couldn't be an empty
+  // code: 400
+  FieldCouldNotBeAnEmpty = 23;
+
+  // errors:Token not valid
+  // code: 400
+  TokenNotValid = 24;
 }
