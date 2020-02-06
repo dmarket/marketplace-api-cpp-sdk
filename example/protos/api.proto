@@ -258,6 +258,71 @@ service MarketAPI {
   // Send game integration email
   //
   rpc SendGameIntegrationEmail(SendGameIntegrationEmailRequest) returns (SendGameIntegrationEmailResponse);
+
+  //
+  //  Create transfer asset between game backend and marketplace
+  //
+  rpc CreateTransfer (CreateTransferRequest) returns (CreateTransferResponse);
+
+  //
+  // Check transfer process status
+  //
+  rpc GetTransferStatus (GetTransferStatusRequest) returns (GetTransferStatusResponse);
+}
+
+message GetTransferStatusResponse {
+  // Transfer operation unique identifier.
+  string TransferID = 1;
+  TransferType Type = 2;
+  // Initial assets list requested to transfer.
+  repeated TransferAsset Assets = 3;
+  // Current transfer operation status.
+  TransferStatus Status = 4;
+  // Error details in case of failed transfer operation.
+  string Error = 5;
+  // Transformations of in-game asset id from request and new in-market asset ids after
+  // transfer.
+  repeated AssetTransformation Transformations = 6;
+}
+
+message AssetTransformation {
+  // Actual asset view before transfer processed
+  // After push transfer it will contain marketplace representation
+  // After pull transfer it will contain game representation
+  TransferAsset Before = 1;
+  // Actual asset view after transfer processed
+  // After push transfer it will contain game representation
+  // After pull transfer transfer it will contain marketplace representation
+  TransferAsset After = 2;
+}
+
+message GetTransferStatusRequest {
+  string TransferID = 1;
+}
+
+message CreateTransferResponse {
+  string TransferID = 1;
+}
+
+message CreateTransferRequest {
+  // transfer type
+  TransferType Type = 1;
+  // asset that need to be processed
+  repeated TransferAsset Assets = 2;
+}
+
+enum TransferType {
+  _ = 0;
+  // Push asset to the game (withdrawal)
+  Push = 1;
+  // Pull asset from the game (deposit)
+  Pull = 2;
+}
+
+message TransferAsset {
+  string OriginID = 1;
+  string VariantID = 2;
+  string GameID = 3;
 }
 
 message ExchangeAuthTokenRequest {
