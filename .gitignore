@@ -1,2 +1,8 @@
-example/cmake-build-debug/
 .idea/
+api/cmake-build-debug/
+api/_deps
+api/CMakeFiles
+api/gens
+api/CMakeCache.txt
+api/cmake_install.cmake
+api/Makefile
