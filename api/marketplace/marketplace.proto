@@ -396,10 +396,13 @@ message GetShowcaseRequest {
   ShowcaseSortType SortType = 20;
 
   // Offsets items in response.
-  uint64 Offset = 21;
+  uint64 Offset = 21 [deprecated=true];
 
   // Limits number or returned items in response.
   uint64 Limit = 22;
+
+  // Cursor is a next page identifier.
+  string Cursor = 23;
 }
 
 message GetShowcaseResponse {
@@ -408,6 +411,9 @@ message GetShowcaseResponse {
 
   // Total number of items that complain with provided filter.
   uint64 Total = 2;
+
+  // Cursor is a next page identifier.
+  string Cursor = 3;
 }
 
 message GetUserInventoryRequest {
@@ -427,10 +433,13 @@ message GetUserInventoryRequest {
   InventoryPresentationType Presentation = 6;
 
   // Offsets items in response.
-  uint64 Offset = 11;
+  uint64 Offset = 11 [deprecated=true];
 
   // Limits number or returned items in response.
   uint64 Limit = 12;
+
+  // Cursor is a next page identifier.
+  string Cursor = 13;
 }
 
 message BasicInventoryFilters {
@@ -629,6 +638,9 @@ message GetUserInventoryResponse {
 
   // Total number of items that complain with provided filter.
   uint64 Total = 2;
+
+  // Cursor is a next page identifier.
+  string Cursor = 3;
 }
 
 message GetUserSummaryRequest {
@@ -840,10 +852,13 @@ message GetUserTargetsRequest {
   UserTargetsSortType SortType = 5;
 
   // Offsets items in response.
-  uint64 Offset = 21;
+  uint64 Offset = 21 [deprecated=true];
 
   // Limits number or returned items in response.
   uint64 Limit = 22;
+
+  // Cursor is next page identifier.
+  string Cursor = 23;
 }
 
 message GetUserClosedTargetsRequest {
@@ -899,6 +914,9 @@ message GetUserTargetsResponse {
 
   // Total number of items that complain with provided filters.
   uint64 Total = 2;
+
+  // Cursor is next page identifier.
+  string Cursor = 3;
 }
 
 message Target {
@@ -1052,10 +1070,13 @@ message GetUserOffersRequest {
   BasicUserOffersFilters BasicFilters = 6;
 
   // Offsets items in response.
-  uint64 Offset = 21;
+  uint64 Offset = 21 [deprecated=true];
 
   // Limits number or returned items in response.
   uint64 Limit = 22;
+
+  // Cursor is a next page identifier.
+  string Cursor = 23;
 }
 
 message BasicUserOffersFilters {
@@ -1075,6 +1096,9 @@ message GetUserOffersResponse {
 
   // Total number of items that complain with provided filter.
   uint64 Total = 2;
+
+  // Cursor is a next page identifier.
+  string Cursor = 3;
 }
 
 message CreateOffersRequest {

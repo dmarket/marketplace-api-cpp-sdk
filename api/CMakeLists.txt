@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-project(api-example)
+project(marketplace-api)
 
 set(CMAKE_CXX_STANDARD 14)
 
@@ -26,7 +26,7 @@ else ()
 endif ()
 
 # Proto file
-get_filename_component(hw_proto "protos/api.proto" ABSOLUTE)
+get_filename_component(hw_proto "api/marketplace.proto" ABSOLUTE)
 get_filename_component(hw_proto_path "${hw_proto}" PATH)
 
 # Generated sources
@@ -48,10 +48,10 @@ add_custom_command(
 # Include generated *.pb.h files
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
-add_executable(api-example main.cpp
+add_executable(marketplace-api main.cpp
         ${hw_proto_srcs}
         ${hw_grpc_srcs})
 
-target_link_libraries(api-example
+target_link_libraries(marketplace-api
         ${_GRPC_GRPCPP_UNSECURE}
         ${_PROTOBUF_LIBPROTOBUF})
